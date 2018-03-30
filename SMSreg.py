@@ -3,17 +3,8 @@ import requests
 import json
 import time
 import config
-
-#TODO: test what does api.getNum return
 #TODO: add exceptions
 
-#logfile='SMS-reg.txt'
-'''
-cd desktop\grisha\progproj\tgb\tgservice
-C:\programming\python\python.exe
-import cluster
-test = cluster.Cluster('http://localhost/', '4286')
-'''
 #TODO: log every answer
 class SMSreg:
         currentRate = 3.0
@@ -77,7 +68,7 @@ class SMSreg:
                                 SMSreg.__log('Operation status is not valid. Trying again (status == ' + Num.json()['response'] + ')')
                                 
                                 if (Num.json()['response'] == 'WARNING_NO_NUMS'):
-                                        SMSreg.raiseRate(config.raseRateOnFail)
+                                        SMSreg.raiseRate(config.raiseRateOnFail)
                                 
                                 SMSreg.getNum()
 

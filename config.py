@@ -13,10 +13,3 @@ clusterSavePath = './clusters/'
 
 raiseRateOnFail    = 0.2
 lowerRateOnSuccess = 1
-
-'''
-cd desktop\grisha\progproj\tgb\tgservice
-C:\programming\python\python.exe
-import account
-test = account.Account('68.227.57.105', 57148)
-'''
