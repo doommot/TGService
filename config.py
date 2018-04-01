@@ -9,7 +9,7 @@ APP_APIKEY='1MFHA6V3BXVAFE'
 #smsregAPIkey='onotr90olrkhfloikscilg8515m2ab2c'
 bot_token = '359393059:AAEi7Q5yKiDHerSVqzpsHuhCxC189Vx9kSQ'
 
-clusterSavePath = './clusters/'
+clusterSavePath = ''
 
 raiseRateOnFail    = 0.2
 lowerRateOnSuccess = 1
