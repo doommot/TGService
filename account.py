@@ -136,7 +136,7 @@ class Account:
                 self.__log('gone online')
 
         def setOffline(self):
-                self.client.client(updateStatusRequest(True))
+                self.client(updateStatusRequest(True))
                 self.__log('gone offline')
 
         def subscribe(self, channel):
