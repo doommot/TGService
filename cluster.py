@@ -11,6 +11,7 @@ from account import Account
 import time
 import random
 
+
 lTasks = []
 
 class Cluster:
@@ -92,27 +93,28 @@ class Cluster:
 #end of class
 
 def mainLoop():
-	global lTasks
-	
-	for task in lTasks:
-		if time.time() >= task['time']:
+        while True:
+                global lTasks
+                
+                for task in lTasks:
+                        if time.time() >= task['time']:
 
-			#switch (pochti)
-			if task['event'] == 'sub':
-				Cluster.subThisAcc(task['acc'], task['arg1'])
+                                #switch (pochti)
+                                if task['event'] == 'sub':
+                                        Cluster.subThisAcc(task['acc'], task['arg1'])
 
-			elif task['event'] == 'unsub':
-				Cluster.unsubThisAcc(task['acc'], task['arg1'])
+                                elif task['event'] == 'unsub':
+                                        Cluster.unsubThisAcc(task['acc'], task['arg1'])
 
-			elif task['event'] == 'online':
-				Cluster.onlineThisAcc(task['acc'])
+                                elif task['event'] == 'online':
+                                        Cluster.onlineThisAcc(task['acc'])
 
-			elif task['event'] == 'offline':
-				Cluster.offlineThisAcc(task['acc'])
+                                elif task['event'] == 'offline':
+                                        Cluster.offlineThisAcc(task['acc'])
 
-			else:
-				raise Exception('Wrong statement in tasks list')
-			#end of switch
+                                else:
+                                        raise Exception('Wrong statement in tasks list')
+                                #end of switch
 
 
 
