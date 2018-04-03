@@ -40,6 +40,8 @@ class SMSreg:
 
         def raiseRate(value):
                 SMSreg.currentRate += value
+                SMSreg.currentRate = min(SMSreg.currentRate, config.maxRate)
+                
                 SMSreg.__setRate(SMSreg.currentRate)
         
         def getNum():#returns number

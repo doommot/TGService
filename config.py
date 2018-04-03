@@ -1,6 +1,6 @@
 api_id = 136379
 api_hash = '99f3a6dd52cf8c770bed8d601f17bdad'
-logfile = "log.txt"
+logfile = "../data/log.txt"
 SREGlog="SMS-reg.txt"
 curClusterAccs = 0
 APIkey='s00eyfgsl3opz5ww4s7127hthkxih24v'
@@ -13,3 +13,4 @@ dataSavePath = '../data/'
 
 raiseRateOnFail    = 0.2
 lowerRateOnSuccess = 1
+maxRate = 7
