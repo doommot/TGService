@@ -27,7 +27,7 @@ class Cluster:
 		log_stream.close()
 
 	def __save():
-		saveFile = open(config.clusterSavePath + 'clust.cluster', 'w', encoding = 'utf8')
+		saveFile = open(config.dataSavePath + 'clust.cluster', 'w', encoding = 'utf8')
 		
 		for acc in Cluster.lAccounts:
 			saveFile.write(str(acc.phone) + '\n')
@@ -76,7 +76,8 @@ class Cluster:
 	def onlineThisAcc(i):
 		global lTasks
 
-		timeToGo = time.time() + random.randint(900, 7200)
+		timeToGo = time.time() + random.randint(60, 500)
+		(Cluster.lAccounts[i]).log('This account set online. Will go offline in ' + str(timeToGo - time.time()) + ' sec')
 
 		Cluster.lAccounts[i].setOnline()
 		lTasks.append({'acc' : i, 'time' : timeToGo, 'event' : 'offline'})
@@ -85,39 +86,43 @@ class Cluster:
 		global lTasks
 
 		timeToGo = time.time() + random.randint(900, 7200)
+		(Cluster.lAccounts[i]).log('This account set offline. Will go online in ' + str(timeToGo - time.time()) + ' sec')
 
-		Cluster.lAccounts[i].setOnline()
+		Cluster.lAccounts[i].setOffline()
 		lTasks.append({'acc' : i, 'time' : timeToGo, 'event' : 'online'})
 
 #end of class
 
 def mainLoop():
-	global lTasks
-	
-	for task in lTasks:
-		if time.time() >= task['time']:
+        while True:
+                global lTasks
+                
+                for task in lTasks:
+                        if time.time() >= task['time']:
 
-			#switch (pochti)
-			if task['event'] == 'sub':
-				Cluster.subThisAcc(task['acc'], task['arg1'])
+                                #switch (pochti)
+                                if task['event'] == 'sub':
+                                        Cluster.subThisAcc(task['acc'], task['arg1'])
 
-			elif task['event'] == 'unsub':
-				Cluster.unsubThisAcc(task['acc'], task['arg1'])
+                                elif task['event'] == 'unsub':
+                                        Cluster.unsubThisAcc(task['acc'], task['arg1'])
 
-			elif task['event'] == 'online':
-				Cluster.onlineThisAcc(task['acc'])
+                                elif task['event'] == 'online':
+                                        Cluster.onlineThisAcc(task['acc'])
 
-			elif task['event'] == 'offline':
-				Cluster.offlineThisAcc(task['acc'])
+                                elif task['event'] == 'offline':
+                                        Cluster.offlineThisAcc(task['acc'])
 
-			else:
-				raise Exception('Wrong statement in tasks list')
-			#end of switch
+                                else:
+                                        raise Exception('Wrong statement in tasks list')
+                                #end of switch
+
+                                lTasks.remove(task)
 
 
 
 def load():
-	file = open(config.clusterSavePath + 'clust.cluster', 'r', encoding = 'utf8')
+	file = open(config.dataSavePath + 'clust.cluster', 'r', encoding = 'utf8')
 	
 	telList = [line.strip() for line in file]
 	Cluster.addAccounts(lPhoneNumbers = telList)

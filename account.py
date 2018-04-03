@@ -19,7 +19,7 @@ class Account:
         proxyPort = None
         
 #private funcs:
-        def __log(self, string):
+        def log(self, string):
                 log_stream = open(config.logfile, "a", encoding = 'utf8')
                 mem = 'ACCN (' + self.phone + ') [' + datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S;") + ']: ' + string + '\n'
                 log_stream.write(mem)
@@ -47,23 +47,23 @@ class Account:
 
         def __connect(self):
                 try:
-                        self.client = TelegramClient(self.phone, config.api_id, config.api_hash)#, proxy = (socks.SOCKS5, self.proxyName, self.proxyPort))
+                        self.client = TelegramClient(config.dataSavePath + self.phone, config.api_id, config.api_hash)#, proxy = (socks.SOCKS5, self.proxyName, self.proxyPort))
                         for i in range(50):
-                                self.__log("Connecting...")
+                                self.log("Connecting...")
                                 
                                 if self.client.connect():
-                                        self.__log("Successfully connected to the server")
+                                        self.log("Successfully connected to the server")
                                         return
                         
-                        self.__log("UNABLE TO CONNECT TO THE SERVER")
+                        self.log("UNABLE TO CONNECT TO THE SERVER")
                         return False
                            
                 except PermissionError:
-                        self.__log("Unable to create account!!! An error appeared due to wrong api_id or api_hash")
+                        self.log("Unable to create account!!! An error appeared due to wrong api_id or api_hash")
                         return False
 
                 except ValueError:
-                        self.__log("Unable to create account!!! An error appeared due to wrong Session parameter")
+                        self.log("Unable to create account!!! An error appeared due to wrong Session parameter")
                         return False
 
                 
@@ -73,26 +73,26 @@ class Account:
 
                 self.phone = numResponse['num']
 
-                self.__log("Phone got. Registration is starting, self.phone="+self.phone)
+                self.log("Phone got. Registration is starting, self.phone="+self.phone)
                 try:
                         self.__connect()
-                        self.__log("Sending code request for this account")
+                        self.log("Sending code request for this account")
                         self.client.send_code_request(self.phone)
 
                 except telethon.errors.rpc_error_list.PhoneNumberBannedError:
-                        self.__log('This phone number is banned')
+                        self.log('This phone number is banned')
 
                         SMSreg.wrongNum(numResponse['tzid'])
                         self.__reg()
                 
                 '''
                 except PhoneNumberInvalidError:
-                        self.__log('phone number invalid')
+                        self.log('phone number invalid')
                         self.__init__(proxyName, proxyPort)
                 '''
                 '''
                 except PhoneNumberBannedError:
-                        self.__log('phone number banned')
+                        self.log('phone number banned')
                         SMSreg.wrongNum(self.phone)
 
 
@@ -100,7 +100,7 @@ class Account:
 
                 fname = random.choice(names.firstnames)
                 lname = random.choice(names.lastnames)
-                self.__log('The chosen name for acc is ' + fname + ' ' + lname)
+                self.log('The chosen name for acc is ' + fname + ' ' + lname)
                 Code=SMSreg.getCode(numResponse['tzid'])
 
                 if Code == 0:
@@ -111,7 +111,7 @@ class Account:
                         self.client.sign_up(Code, fname, lname)
 
                 except telethon.errors.rpc_error_list.PhoneNumberOccupiedError:
-                        self.__log('This phone number is already occupied')
+                        self.log('This phone number is already occupied')
                         try:
                                 self.client.sign_in(phone=self.phone, code=Code)
                         except telethon.errors.rpc_error_list.SessionPasswordNeededError:
@@ -126,29 +126,29 @@ class Account:
                                 SMSreg.wrongCode(self.phone)
                 '''
                 SMSreg.finish(numResponse['tzid'])
-                self.__log("Client is signed up")
+                self.log("Client is signed up")
 
 
 #public funcs:
 
         def setOnline(self):
                 self.client(UpdateStatusRequest(False))
-                self.__log('gone online')
+                self.log('gone online')
 
         def setOffline(self):
-                self.client(updateStatusRequest(True))
-                self.__log('gone offline')
+                self.client(UpdateStatusRequest(True))
+                self.log('gone offline')
 
         def subscribe(self, channel):
                 self.client(JoinChannelRequest(self.client.get_entity(channel)))    
-                self.__log('Joined ' + channel) 
+                self.log('Joined ' + channel) 
 
         def unsubscribe(self, channel):
                 self.client(LeaveChannelRequest(self.client.get_entity(channel)))
-                self.__log('left '+channel)
+                self.log('left '+channel)
 
 
-#me = Account('+79851272285')
+
 '''
 messages = client.get_message_history(PeerChannel(…), limit=3000)
 #retain views

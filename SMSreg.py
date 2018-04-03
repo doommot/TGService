@@ -3,6 +3,8 @@ import requests
 import json
 import time
 import config
+import math
+
 #TODO: add exceptions
 
 #TODO: log every answer
@@ -24,7 +26,7 @@ class SMSreg:
                 
                 r = requests.get('http://api.sms-reg.com/setRate.php?rate=' + str(float(value)) + '&apikey=' + config.APIkey).json()
                 
-                if r['response'] != '1' or float(r['rate']) != float(value):
+                if r['response'] != '1' or not math.isclose(float(r['rate']), float(value)):
                         SMSreg.__log("Some error occured, r['response'] = " + r['response'])
                         try:
                                 SMSreg.__log("r['rate'] = " + str(r['rate']))
