@@ -63,7 +63,8 @@ class SMSreg:
                                 SMSreg.__log('phone is '+Num.json()['number'])
 
                                 SMSreg.currentRate -= config.lowerRateOnSuccess
-                                if SMSreg.currentRate < 2.0: SMSreg.currentRate = 2.0
+                                if SMSreg.currentRate < 2.0:
+                                        SMSreg.currentRate = 2.0
                                 
                                 return {'num' : Num.json()['number'], 'tzid' : r.json()['tzid']}
                         elif (Num.json()['response']=='TZ_INPOOL'):

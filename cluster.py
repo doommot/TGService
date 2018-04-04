@@ -37,6 +37,8 @@ class Cluster:
 
 #public funcs:
 	def addAccounts(numToCreate = 0, lPhoneNumbers = None):
+                load()
+                
 		if not lPhoneNumbers:
 			for i in range(numToCreate):
 				Cluster.lAccounts.append(Account())
