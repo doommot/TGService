@@ -60,11 +60,14 @@ class SMSreg:
                         SMSreg.__log('getting state')
                         Num=requests.get('http://api.sms-reg.com/getState.php?tzid='+r.json()['tzid']+'&apikey='+config.APIkey)
                         if (Num.json()['response']=='TZ_NUM_PREPARE'):
+                                SMSreg.__log('JSON response is "TZ_NUM_PREPARE"')
                                 SMSreg.__log('phone is '+Num.json()['number'])
 
                                 SMSreg.currentRate -= config.lowerRateOnSuccess
                                 if SMSreg.currentRate < 2.0:
                                         SMSreg.currentRate = 2.0
+
+                                SMSreg.__log('Set VARIABLE SMSreg.currentRate to be ' + str(SMSreg.currentRate))
                                 
                                 return {'num' : Num.json()['number'], 'tzid' : r.json()['tzid']}
                         elif (Num.json()['response']=='TZ_INPOOL'):
@@ -75,7 +78,7 @@ class SMSreg:
                                 if (Num.json()['response'] == 'WARNING_NO_NUMS'):
                                         SMSreg.raiseRate(config.raiseRateOnFail)
                                 
-                                SMSreg.getNum()
+                                return SMSreg.getNum()
 
         def wrongNum(tzid):
                 time.sleep(15)#this method should be used after 15sec min since getNum
