@@ -33,7 +33,12 @@ class Cluster:
 			saveFile.write(str(acc.phone) + '\n')
 
 		saveFile.close()
-		
+
+	def save_acc(acc):
+		#if(acc.client.is_user)
+		saveFile = open(config.dataSavePath + 'clust.cluster', 'a', encoding = 'utf8')
+		saveFile.write(str(acc.phone) + '\n')
+		saveFile.close()
 
 #public funcs:
 	def addAccounts(numToCreate = 0, lPhoneNumbers = None):
@@ -46,6 +51,7 @@ class Cluster:
 			for i in range(len(lPhoneNumbers)):
 				Cluster.lAccounts.append(Account(phone = lPhoneNumbers[i]))
 				Cluster.onlineThisAcc(len(Cluster.lAccounts) - 1)
+				Cluster.save_acc(lAccounts[(len(Cluster.lAccounts) - 1)])
 
 		Cluster.__save()
 	
