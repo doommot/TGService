@@ -51,7 +51,7 @@ class Cluster:
 			for i in range(len(lPhoneNumbers)):
 				Cluster.lAccounts.append(Account(phone = lPhoneNumbers[i]))
 				Cluster.onlineThisAcc(len(Cluster.lAccounts) - 1)
-				Cluster.save_acc(lAccounts[(len(Cluster.lAccounts) - 1)])
+				Cluster.save_acc(Cluster.lAccounts[(len(Cluster.lAccounts) - 1)])
 
 		Cluster.__save()
 	
