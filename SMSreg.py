@@ -83,12 +83,17 @@ class SMSreg:
 
 	def wrongNum(tzid):
 		time.sleep(15)#this method should be used after 15sec min since getNum
+		'''
 		while((requests.get('http://api.sms-reg.com/setOperationUsed.php?tzid='+tzid+'&apikey='+config.APIkey)).json()['response'] != '1'):
 			SMSreg.__log('setOperationUsed did not work properly')
 			time.sleep(5)
 
 		while((requests.get('http://api.sms-reg.com/setOperationOk.php?tzid='+tzid+'&apikey='+config.APIkey)).json()['response'] != '1'):
 			SMSreg.__log('setOperationOk did not work properly')
+			time.sleep(5)
+		'''
+		if((requests.get('http://api.sms-reg.com/setOperationUsed.php?tzid='+tzid+'&apikey='+config.APIkey)).json()['response'] != '1'):
+			SMSreg.__log('setOperationUsed did not work properly')
 			time.sleep(5)
 
 	def getCode(tzid):#returns code from sms
