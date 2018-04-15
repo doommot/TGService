@@ -9,7 +9,7 @@ import math
 
 #TODO: log every answer
 class SMSreg:
-	currentRate = 3.0
+	currentRate = 2.0
 	
 	#tzid=None
 	'''
@@ -65,8 +65,8 @@ class SMSreg:
 				SMSreg.__log('phone is '+Num.json()['number'])
 
 				SMSreg.currentRate -= config.lowerRateOnSuccess
-				if SMSreg.currentRate < 2.0:
-					SMSreg.currentRate = 2.0
+				if SMSreg.currentRate < 0.0:
+					SMSreg.currentRate = 0.0
 
 				SMSreg.__log('Set VARIABLE SMSreg.currentRate to be ' + str(SMSreg.currentRate))
 				

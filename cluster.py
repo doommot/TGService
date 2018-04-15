@@ -59,7 +59,7 @@ class Cluster:
 		global lTasks
 		
 		for i in range(ammount):
-			timeToSub = time.time() + (i * random.randint(1200, 3600))
+			timeToSub = time.time() + (i * random.randint(300, 600))
 
 			lTasks.append({'acc' : i, 'time' : timeToSub, 'event' : 'sub', 'arg1' : channel})
 
